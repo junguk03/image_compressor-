@@ -176,6 +176,30 @@ main {
     margin-bottom: 15px;
 }
 
+.image-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.comparison-item {
+    position: relative;
+}
+
+.comparison-label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    z-index: 1;
+}
+
 .image-info {
     margin-bottom: 15px;
 }
@@ -297,12 +321,29 @@ footer {
     font-size: 0.9rem;
 }
 
+footer p {
+    margin: 5px 0;
+}
+
+footer .tip {
+    margin-top: 10px;
+    padding: 10px;
+    background: #fff3cd;
+    border-radius: 8px;
+    color: #856404;
+    font-size: 0.85rem;
+}
+
 @media (max-width: 768px) {
     header h1 {
         font-size: 2rem;
     }
 
     .images-container {
+        grid-template-columns: 1fr;
+    }
+
+    .image-comparison {
         grid-template-columns: 1fr;
     }
 

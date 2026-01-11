@@ -173,7 +173,20 @@ class ImageCompressor {
     updateImageCard(imageData) {
         const card = document.getElementById(`image-${imageData.id}`);
         card.innerHTML = `
-            <img src="${imageData.compressedUrl || imageData.originalUrl}" alt="${imageData.name}" class="image-preview">
+            ${imageData.compressed ? `
+                <div class="image-comparison">
+                    <div class="comparison-item">
+                        <div class="comparison-label">원본</div>
+                        <img src="${imageData.originalUrl}" alt="${imageData.name}" class="image-preview">
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">압축</div>
+                        <img src="${imageData.compressedUrl}" alt="${imageData.name}" class="image-preview">
+                    </div>
+                </div>
+            ` : `
+                <img src="${imageData.originalUrl}" alt="${imageData.name}" class="image-preview">
+            `}
             <div class="image-info">
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-size">
