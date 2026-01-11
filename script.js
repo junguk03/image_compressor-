@@ -7,6 +7,42 @@ class ImageCompressor {
 
     init() {
         this.setupEventListeners();
+        this.setupModal();
+    }
+
+    setupModal() {
+        const modal = document.getElementById('imageModal');
+        const closeBtn = document.querySelector('.modal-close');
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            }
+        });
+    }
+
+    openImageModal(imageUrl, imageName, imageSize, label) {
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalImageName = document.getElementById('modalImageName');
+        const modalImageSize = document.getElementById('modalImageSize');
+        const modalLabel = document.querySelector('.modal-label');
+
+        modalImage.src = imageUrl;
+        modalImageName.textContent = imageName;
+        modalImageSize.textContent = imageSize;
+        modalLabel.textContent = label;
+        modal.style.display = 'flex';
     }
 
     setupEventListeners() {
@@ -86,7 +122,7 @@ class ImageCompressor {
         card.id = `image-${imageData.id}`;
 
         card.innerHTML = `
-            <img src="${imageData.originalUrl}" alt="${imageData.name}" class="image-preview">
+            <img src="${imageData.originalUrl}" alt="${imageData.name}" class="image-preview" onclick="compressor.openImageModal('${imageData.originalUrl}', '${imageData.name}', '${this.formatSize(imageData.originalSize)}', '원본')" style="cursor: pointer;" title="클릭하여 크게 보기">
             <div class="image-info">
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-size">
@@ -175,17 +211,17 @@ class ImageCompressor {
         card.innerHTML = `
             ${imageData.compressed ? `
                 <div class="image-comparison">
-                    <div class="comparison-item">
+                    <div class="comparison-item" onclick="compressor.openImageModal('${imageData.originalUrl}', '${imageData.name}', '${this.formatSize(imageData.originalSize)}', '원본')" style="cursor: pointer;" title="클릭하여 크게 보기">
                         <div class="comparison-label">원본</div>
                         <img src="${imageData.originalUrl}" alt="${imageData.name}" class="image-preview">
                     </div>
-                    <div class="comparison-item">
+                    <div class="comparison-item" onclick="compressor.openImageModal('${imageData.compressedUrl}', '${imageData.name}', '${this.formatSize(imageData.compressedSize)}', '압축')" style="cursor: pointer;" title="클릭하여 크게 보기">
                         <div class="comparison-label">압축</div>
                         <img src="${imageData.compressedUrl}" alt="${imageData.name}" class="image-preview">
                     </div>
                 </div>
             ` : `
-                <img src="${imageData.originalUrl}" alt="${imageData.name}" class="image-preview">
+                <img src="${imageData.originalUrl}" alt="${imageData.name}" class="image-preview" onclick="compressor.openImageModal('${imageData.originalUrl}', '${imageData.name}', '${this.formatSize(imageData.originalSize)}', '원본')" style="cursor: pointer;" title="클릭하여 크게 보기">
             `}
             <div class="image-info">
                 <div class="image-name">${imageData.name}</div>
